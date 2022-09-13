@@ -5,6 +5,7 @@ import { MongoClient } from "mongodb";
 import { unknownHandler, errorHandler } from "./middleware/middleware.js";
 import { logger } from "./middleware/analysis.js";
 import "dotenv/config";
+import cors from "cors";
 
 const server = express();
 
@@ -28,6 +29,7 @@ server.use(express.json());
 server.use(homeRouter);
 server.use("/posts", postsRouter);
 server.use(logger);
+server.use(cors);
 //404
 server.use(unknownHandler);
 
