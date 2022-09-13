@@ -8,12 +8,11 @@ import "dotenv/config";
 
 const server = express();
 
-const password = process.env.MN_KEY;
-const port = process.env.PORT;
-const uri = `mongodb+srv://Abidal:${password}@cluster0.irfyfkz.mongodb.net/?retryWrites=true&w=majority`;
+const PORT = process.env.PORT;
+const DB_URI = process.env.DB_URI;
 
 const connectDB = async () => {
-  const client = new MongoClient(uri);
+  const client = new MongoClient(DB_URI);
   try {
     await client.connect();
     console.log("Connected to DB!");
@@ -35,6 +34,6 @@ server.use(unknownHandler);
 //Error Handler
 server.use(errorHandler);
 
-server.listen(port, () => {
-  console.log(`Server running on: http://localhost:${port}`);
+server.listen(PORT, () => {
+  console.log(`Server running on: http://localhost:${PORT}`);
 });
