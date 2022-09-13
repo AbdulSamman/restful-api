@@ -1,4 +1,4 @@
-import { ObjectID } from "mongodb";
+import { ObjectId } from "mongodb";
 
 export const getPosts = async (req, res) => {
   try {
@@ -46,7 +46,7 @@ export const getOne = async (req, res) => {
   try {
     const postsDb = req.app.locals.db;
     const postsCo = postsDb.collection("posts");
-    const getPost = await postsCo.findOne({ _id: ObjectID(req.params.id) });
+    const getPost = await postsCo.findOne({ _id: new ObjectId(req.params.id) });
     if (getPost) {
       res.json(getPost);
     } else {
@@ -77,7 +77,7 @@ export const updatePosts = async (req, res) => {
     const postsCo = postsDb.collection("posts");
 
     const findPost = await postsCo.updateOne(
-      { _id: ObjectID(req.params.id) },
+      { _id: new ObjectId(req.params.id) },
       { $set: { ...req.body } }
     );
 
@@ -92,7 +92,7 @@ export const deletePosts = async (req, res) => {
     const postsDb = req.app.locals.db;
     const postsCo = postsDb.collection("posts");
     const deleteOne = await postsCo.deleteOne({
-      _id: ObjectID(req.params.id),
+      _id: new ObjectId(req.params.id),
     });
     res.json(deleteOne);
   } catch (error) {

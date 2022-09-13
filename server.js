@@ -2,12 +2,13 @@ import express from "express";
 import homeRouter from "./route/home.js";
 import postsRouter from "./route/posts.js";
 import { MongoClient } from "mongodb";
+import { unknownHandler, errorHandler } from "./middleware.js/middleware.js";
 import "dotenv/config";
 
-const port = 4000;
 const server = express();
-server.use(express.json());
+
 const password = process.env.MN_KEY;
+const port = process.env.PORT;
 const uri = `mongodb+srv://Abidal:${password}@cluster0.irfyfkz.mongodb.net/?retryWrites=true&w=majority`;
 
 const connectDB = async () => {
@@ -17,23 +18,20 @@ const connectDB = async () => {
     console.log("Connected to DB!");
     server.locals.db = client.db("Restful-API");
   } catch (error) {
-    console.log(error);
+    throw new Error(error);
   }
 };
 connectDB();
+
+server.use(express.json());
 server.use(homeRouter);
 server.use("/posts", postsRouter);
 
-server.use("*", (req, res) => {
-  res.status(404).send("Sorry,route  not found");
-});
+//404
+server.use(unknownHandler);
 
-server.use((err, req, res, next) => {
-  console.log(err);
-
-  res.status(500);
-  res.send("There has been an error. We are really sorry");
-});
+//Error Handler
+server.use(errorHandler);
 
 server.listen(port, () => {
   console.log(`Server running on: http://localhost:${port}`);
