@@ -1,6 +1,7 @@
 {
   "name": "restful-api",
   "version": "1.0.0",
+  "description": "",
   "type": "module",
   "main": "server.js",
   "scripts": {
@@ -26,6 +27,5 @@
   },
   "devDependencies": {
     "dotenv": "^16.0.2"
-  },
-  "description": ""
+  }
 }
