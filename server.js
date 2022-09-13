@@ -29,7 +29,7 @@ server.use(express.json());
 server.use(homeRouter);
 server.use("/posts", postsRouter);
 server.use(logger);
-server.use(cors);
+server.use(cors());
 //404
 server.use(unknownHandler);
 
