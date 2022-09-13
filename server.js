@@ -2,7 +2,8 @@ import express from "express";
 import homeRouter from "./route/home.js";
 import postsRouter from "./route/posts.js";
 import { MongoClient } from "mongodb";
-import { unknownHandler, errorHandler } from "./middleware.js/middleware.js";
+import { unknownHandler, errorHandler } from "./middleware/middleware.js";
+import { logger } from "./middleware/analysis.js";
 import "dotenv/config";
 
 const server = express();
@@ -24,9 +25,10 @@ const connectDB = async () => {
 connectDB();
 
 server.use(express.json());
+
 server.use(homeRouter);
 server.use("/posts", postsRouter);
-
+server.use(logger);
 //404
 server.use(unknownHandler);
 
