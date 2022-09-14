@@ -4,7 +4,7 @@ import postsRouter from "./route/posts.js";
 import { MongoClient } from "mongodb";
 import { unknownHandler, errorHandler } from "./middleware/middleware.js";
 import { logger } from "./middleware/analysis.js";
-import "dotenv/config";
+//import "dotenv/config";
 import cors from "cors";
 
 const server = express();
