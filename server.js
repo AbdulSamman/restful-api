@@ -8,6 +8,7 @@ import "dotenv/config";
 import cors from "cors";
 
 const server = express();
+server.use(cors());
 
 const PORT = process.env.PORT || 4000;
 const DB_URI = process.env.DB_URI;
@@ -29,24 +30,6 @@ server.use(express.json());
 server.use(homeRouter);
 server.use("/posts", postsRouter);
 server.use(logger);
-server.use(
-  cors({
-    allowedHeaders: [
-      "sessionId",
-      "Content-Type",
-      "Authorization",
-      "authorization",
-    ],
-    exposedHeaders: ["sessionId"],
-    origin: [
-      "https://my-first-restful-api.herokuapp.com/",
-      "https://my-first-restful-api.herokuapp.com/",
-    ],
-    methods: "GET,PUT,POST,DELETE",
-    credentials: false,
-    preflightContinue: false,
-  })
-);
 //404
 server.use(unknownHandler);
 
